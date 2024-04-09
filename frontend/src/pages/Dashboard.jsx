@@ -25,9 +25,31 @@ function Dashboard ({ token, onTokenChange }) {
 
   console.log(store);
 
-  return <>
-    <LogoutButton token={token} setToken={onTokenChange} /><br />
-  </>;
+  return (
+    <div className="dashboard">
+      {/* TODO: move nav bar into components */}
+      <nav>
+        <ul>
+          {/* can add other nav components */}
+          <li>
+            <LogoutButton token={token} setToken={onTokenChange} /><br />
+          </li>
+        </ul>
+      </nav>
+
+      <div className="main-split-panel">
+        <div className="sidebar-wrapper">
+          <div className="user-info">
+            <h2>Profile</h2>
+          </div>
+        </div>
+        <div className="content-wrapper">
+          <h3 id="default-dash" style={{ color: '#999999', fontSize: '23px', marginTop: '-50px', userSelect: 'none' }}>Create a new deck</h3>
+        </div>
+      </div>
+    </div>
+
+  );
 }
 
 export default Dashboard;

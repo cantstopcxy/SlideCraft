@@ -43,32 +43,34 @@ function Register ({ token, onTokenChange }) {
   }
 
   return (
-    <div className="auth-container">
-      <header>Sign Up</header>
-      <form className="auth-form">
-        <div className="field email">
-          <div className="input-area">
-            <input type="text" onChange={e => setEmail(e.target.value)} value={email} placeholder="Email" id="register-email" />
+    <div className='centered-content'>
+      <div className="auth-container">
+        <header>Sign Up</header>
+        <form className="auth-form">
+          <div className="field email">
+            <div className="input-area">
+              <input type="text" onChange={e => setEmail(e.target.value)} value={email} placeholder="Email" id="register-email" />
+            </div>
           </div>
-        </div>
-        <div className="field name">
-          <div className="input-area">
-            <input type="text" onChange={e => setName(e.target.value)} value={name} placeholder="Name" id="register-name" />
+          <div className="field name">
+            <div className="input-area">
+              <input type="text" onChange={e => setName(e.target.value)} value={name} placeholder="Name" id="register-name" />
+            </div>
           </div>
-        </div>
-        <div className="field password">
-          <div className="input-area">
-            <input type="password" onChange={e => setPassword(e.target.value)} value={password} placeholder="Password" id="register-password" />
+          <div className="field password">
+            <div className="input-area">
+              <input type="password" onChange={e => setPassword(e.target.value)} value={password} placeholder="Password" id="register-password" />
+            </div>
           </div>
-        </div>
-        <div className="field password">
-          <div className="input-area">
-            <input type="password" onChange={e => setPasswordConfirm(e.target.value)} value={passwordConfirm} placeholder="Confirm Password" id="password-confirm" />
+          <div className="field password">
+            <div className="input-area">
+              <input type="password" onChange={e => setPasswordConfirm(e.target.value)} value={passwordConfirm} placeholder="Confirm Password" id="password-confirm" />
+            </div>
           </div>
-        </div>
-        <button onClick={register} id="register-btn">Create Account</button>
-      </form>
-      <div className="sign-txt">Already have an account? <a href='/login'>Log In</a></div>
+          <button onClick={register} id="register-btn">Create Account</button>
+        </form>
+        <div className="sign-txt">Already have an account? <a href='/login'>Log In</a></div>
+      </div>
     </div>
   );
 }

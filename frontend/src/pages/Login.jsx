@@ -27,23 +27,25 @@ function Login ({ token, onTokenChange }) {
   }
 
   return (
-    <div className="auth-container">
-      <header>Login</header>
-      <form className="auth-form">
-        <div className="field email">
-          <div className="input-area">
-            <input type="text" onChange={e => setEmail(e.target.value)} value = {email} placeholder="Email" id="login-email" />
+    <div className='centered-content'>
+      <div className="auth-container">
+        <header>Login</header>
+        <form className="auth-form">
+          <div className="field email">
+            <div className="input-area">
+              <input type="text" onChange={e => setEmail(e.target.value)} value = {email} placeholder="Email" id="login-email" />
+            </div>
           </div>
-        </div>
-        <div className="field password">
-          <div className="input-area">
-            <input type="password" onChange={e => setPassword(e.target.value)} value={password} placeholder="Password" id="login-password" />
+          <div className="field password">
+            <div className="input-area">
+              <input type="password" onChange={e => setPassword(e.target.value)} value={password} placeholder="Password" id="login-password" />
+            </div>
           </div>
-        </div>
-        <div className="pass-txt"><a>Forgot password?</a></div>
-        <button onClick={login} id="login-btn">Login</button>
-      </form>
-      <div className="sign-txt">Not a member yet? <a href='/register'>Sign Up</a></div>
+          <div className="pass-txt"><a>Forgot password?</a></div>
+          <button onClick={login} id="login-btn">Login</button>
+        </form>
+        <div className="sign-txt">Not a member yet? <a href='/register'>Sign Up</a></div>
+      </div>
     </div>
   );
 }

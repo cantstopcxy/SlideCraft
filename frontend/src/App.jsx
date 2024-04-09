@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 
 function App () {
+  // localStorage.removeItem('token');
   let lsToken = null;
   if (localStorage.getItem('token')) {
     lsToken = localStorage.getItem('token');
