@@ -1,18 +1,20 @@
 import React from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import api from '../api';
-import { Container, TextField, Button, Typography, Box, Link } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, Link, IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function Login ({ token, onTokenChange }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
   const navigate = useNavigate();
 
   if (token !== null) {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/dashboard" />;
   }
 
-  const login = async () => {
+  const login = async (event) => {
     event.preventDefault();
     try {
       const response = await api.post('/admin/auth/login', {
@@ -25,6 +27,10 @@ function Login ({ token, onTokenChange }) {
       alert(err.response.data.error);
     }
   }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <Container
@@ -48,7 +54,7 @@ function Login ({ token, onTokenChange }) {
         }}
       >
         <Typography variant='h4' sx={{ my: 2, fontWeight: 'bold' }}>Login</Typography>
-        <Box component='form'>
+        <Box component='form' onSubmit={login}>
           <TextField
             margin='normal'
             required
@@ -63,9 +69,22 @@ function Login ({ token, onTokenChange }) {
             required
             fullWidth
             label='Password'
-            type='password'
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisibility}
+                    edge='end'
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <Typography><Link href='#' underline='hover'>Forgot password?</Link></Typography>
           <Button
@@ -75,7 +94,6 @@ function Login ({ token, onTokenChange }) {
             variant='contained'
             size='large'
             sx={{ textTransform: 'capitalize', fontSize: 18, my: 3 }}
-            onClick={login}
           >
             Login
           </Button>

@@ -9,7 +9,6 @@ function Register ({ token, onTokenChange }) {
   const [password, setPassword] = React.useState('');
   const [passwordConfirm, setPasswordConfirm] = React.useState('');
   const [name, setName] = React.useState('');
-
   const navigate = useNavigate();
 
   if (token !== null) {
