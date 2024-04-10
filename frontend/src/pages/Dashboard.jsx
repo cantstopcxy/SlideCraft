@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/main.css';
 import api from '../api';
+import { Box, Typography } from '@mui/material';
 
-import LogoutButton from '../components/LogoutButton';
+import NavBar from '../components/NavBar';
 
 function Dashboard ({ token, onTokenChange }) {
   const [store, setStore] = React.useState({});
@@ -26,29 +26,51 @@ function Dashboard ({ token, onTokenChange }) {
   console.log(store);
 
   return (
-    <div className="dashboard">
-      {/* TODO: move nav bar into components */}
-      <nav>
-        <ul>
-          {/* can add other nav components */}
-          <li>
-            <LogoutButton token={token} setToken={onTokenChange} /><br />
-          </li>
-        </ul>
-      </nav>
+    <Box sx={{ width: '100%' }}>
+      <NavBar token={token} setToken={onTokenChange} />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          height: 'calc(100vh - 64px)',
+          mt: '64px'
+        }}
+      >
+        {/* sidebar */}
+        <Box
+          sx={{
+            minWidth: 400,
+            bgcolor: '#f0f0f0',
+            p: 2
+          }}
+        >
+          <Typography variant="h4">Profile</Typography>
+        </Box>
 
-      <div className="main-split-panel">
-        <div className="sidebar-wrapper">
-          <div className="user-info">
-            <h2>Profile</h2>
-          </div>
-        </div>
-        <div className="content-wrapper">
-          <h3 id="default-dash" style={{ color: '#999999', fontSize: '23px', marginTop: '-50px', userSelect: 'none' }}>Create a new deck</h3>
-        </div>
-      </div>
-    </div>
-
+        {/* for the cards */}
+        <Box
+          sx={{
+            width: '100%',
+            p: 2,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column'
+          }}
+        >
+          <Typography
+            variant='h5'
+            sx={{
+              color: '#999',
+              mt: '-50px',
+              userSelect: 'none'
+            }}
+          >
+            Create a new deck
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

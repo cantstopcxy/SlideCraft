@@ -1,4 +1,5 @@
 import React from 'react';
+import { MenuItem } from '@mui/material';
 import api from '../api';
 
 function Logout ({ token, setToken }) {
@@ -12,13 +13,13 @@ function Logout ({ token, setToken }) {
       setToken(null);
       localStorage.removeItem('token');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       alert(err.response.data.error);
     }
   };
 
   return (
-    <button onClick={logout}>Logout</button>
+    <MenuItem onClick={logout}>Logout</MenuItem>
   );
 }
 
