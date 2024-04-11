@@ -6,8 +6,10 @@ import { Container, TextField, Button, Typography, Box, Link } from '@mui/materi
 
 function Register ({ token, onTokenChange }) {
   const [email, setEmail] = React.useState('');
+  const [emailError, setEmailError] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [passwordConfirm, setPasswordConfirm] = React.useState('');
+  const [passwordError, setPasswordError] = React.useState('');
   const [name, setName] = React.useState('');
   const navigate = useNavigate();
 
@@ -15,16 +17,40 @@ function Register ({ token, onTokenChange }) {
     return <Navigate to="/dashboard" />
   }
 
-  const register = async () => {
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    if (validator.validate(value)) {
+      setEmailError('');
+    } else {
+      setEmailError('Invalid email');
+    }
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (passwordError) setPasswordError('');
+  };
+
+  const handlePasswordConfirmChange = (e) => {
+    setPasswordConfirm(e.target.value);
+    if (passwordError) setPasswordError('');
+  };
+
+  const register = async (event) => {
     event.preventDefault();
 
     if (!validator.validate(email)) {
-      alert('invalid email');
+      setEmailError('Invalid email');
       return;
     }
 
     if (password !== passwordConfirm) {
-      alert('passwords do not match');
+      setPasswordError('Passwords do not match');
       return;
     }
 
@@ -37,7 +63,11 @@ function Register ({ token, onTokenChange }) {
       onTokenChange(response.data.token);
       navigate('/dashboard');
     } catch (err) {
-      alert(err.response.data.error);
+      if (err.response && err.response.status === 400) {
+        setEmailError('This email is already registered')
+      } else {
+        alert('An error occurred. Please try again.');
+      }
     }
   }
 
@@ -53,6 +83,8 @@ function Register ({ token, onTokenChange }) {
       }}
     >
       <Box
+        component='form'
+        onSubmit={register}
         sx={{
           textAlign: 'center',
           width: '100%',
@@ -63,57 +95,59 @@ function Register ({ token, onTokenChange }) {
         }}
       >
         <Typography variant='h4' sx={{ my: 2, fontWeight: 'bold' }}>Sign Up</Typography>
-        <Box component='form'>
-          <TextField
-            margin='normal'
-            required
-            fullWidth
-            label='Email Address'
-            autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            margin='normal'
-            required
-            fullWidth
-            label='Name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            margin='normal'
-            required
-            fullWidth
-            label='Password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <TextField
-            margin='normal'
-            required
-            fullWidth
-            label='Confirm Password'
-            type='password'
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-          />
-          <Button
-            disableElevation
-            type='submit'
-            fullWidth
-            variant='contained'
-            size='large'
-            sx={{ textTransform: 'capitalize', fontSize: 18, my: 3 }}
-            onClick={register}
-          >
-            Create Account
-          </Button>
-          <Typography sx={{ mb: 2 }}>
-            Already have an account? <Link href='/login' underline='hover'>Log In</Link>
-          </Typography>
-        </Box>
+        <TextField
+          error={!!emailError}
+          helperText={emailError}
+          margin='normal'
+          required
+          fullWidth
+          label='Email Address'
+          autoFocus
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <TextField
+          margin='normal'
+          required
+          fullWidth
+          label='Name'
+          value={name}
+          onChange={handleNameChange}
+        />
+        <TextField
+          error={!!passwordError}
+          margin='normal'
+          required
+          fullWidth
+          label='Password'
+          type='password'
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <TextField
+          error={!!passwordError}
+          helperText={passwordError}
+          margin='normal'
+          required
+          fullWidth
+          label='Confirm Password'
+          type='password'
+          value={passwordConfirm}
+          onChange={handlePasswordConfirmChange}
+        />
+        <Button
+          disableElevation
+          type='submit'
+          fullWidth
+          variant='contained'
+          size='large'
+          sx={{ textTransform: 'capitalize', fontSize: 18, my: 3 }}
+        >
+          Create Account
+        </Button>
+        <Typography sx={{ mb: 2 }}>
+          Already have an account? <Link href='/login' underline='hover'>Log In</Link>
+        </Typography>
       </Box>
     </Container>
   );
