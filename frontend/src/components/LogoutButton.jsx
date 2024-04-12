@@ -19,7 +19,7 @@ function Logout ({ token, setToken }) {
   };
 
   return (
-    <MenuItem onClick={logout}>Logout</MenuItem>
+    <MenuItem onClick={logout} sx={{ color: '#333333' }}>Logout</MenuItem>
   );
 }
 

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import EditPresentation from './pages/EditPresentation';
 
 function App () {
   let lsToken = null;
@@ -24,6 +25,7 @@ function App () {
         <Route path="/login" element={<Login token={token} onTokenChange={persistToken} />} />
         <Route path="/register" element={<Register token={token} onTokenChange={persistToken} />} />
         <Route path="/dashboard" element={<Dashboard token={token} onTokenChange={persistToken} />} />
+        <Route path="/edit/:presentationId" element={<EditPresentation />} />
       </Routes>
     </BrowserRouter>
   );

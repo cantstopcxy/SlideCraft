@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import api from '../api';
-import { Container, TextField, Button, Typography, Box, Link, IconButton, InputAdornment } from '@mui/material';
+import { Container, TextField, Button, Typography, Paper, Link, IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function Login ({ token, onTokenChange }) {
@@ -61,16 +61,15 @@ function Login ({ token, onTokenChange }) {
         height: '100vh'
       }}
     >
-      <Box
+      <Paper
         component='form'
         onSubmit={login}
+        elevation={18}
         sx={{
           textAlign: 'center',
-          width: '100%',
           bgcolor: 'white',
           p: 4,
           borderRadius: 3,
-          boxShadow: '10px 10px 15px rgba(0, 0, 0, 0.1)'
         }}
       >
         <Typography variant='h4' sx={{ my: 2, fontWeight: 'bold' }}>Login</Typography>
@@ -122,7 +121,7 @@ function Login ({ token, onTokenChange }) {
         <Typography sx={{ mb: 2 }}>
           Not a member yet? <Link href='/register' underline='hover'>Sign Up</Link>
         </Typography>
-      </Box>
+      </Paper>
     </Container>
   );
 }
