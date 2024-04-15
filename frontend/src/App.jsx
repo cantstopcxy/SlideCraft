@@ -25,7 +25,7 @@ function App () {
         <Route path="/login" element={<Login token={token} onTokenChange={persistToken} />} />
         <Route path="/register" element={<Register token={token} onTokenChange={persistToken} />} />
         <Route path="/dashboard" element={<Dashboard token={token} onTokenChange={persistToken} />} />
-        <Route path="/edit/:presentationId" element={<EditPresentation />} />
+        <Route path="/edit/:presentationId" element={<EditPresentation token={token} />} />
       </Routes>
     </BrowserRouter>
   );

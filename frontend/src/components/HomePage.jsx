@@ -1,8 +1,9 @@
 import React from 'react';
 import { Box, Toolbar } from '@mui/material';
 
-// 'main' page display on dashboard -> render presentation cards here
-function HomePage ({ drawerWidth }) {
+import SlideCards from './SlideCards';
+
+function HomePage ({ drawerWidth, presentations }) {
   return (
     <Box
       component="main"
@@ -14,8 +15,8 @@ function HomePage ({ drawerWidth }) {
       }}
     >
       <Toolbar />
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-        {/* presentation cards go in here */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4, flexWrap: 'wrap' }}>
+        <SlideCards presentations={presentations} />
       </Box>
     </Box>
   );

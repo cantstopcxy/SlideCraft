@@ -8,7 +8,7 @@ import SideBar, { drawerWidth } from '../components/SideBar';
 import HomePage from '../components/HomePage';
 
 function Dashboard ({ token, onTokenChange }) {
-  const [store, setStore] = React.useState({});
+  const [presentations, setPresentations] = React.useState([]);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -20,18 +20,24 @@ function Dashboard ({ token, onTokenChange }) {
           Authorization: token,
         }
       }).then((response) => {
-        setStore(response.data.store)
+        setPresentations(response.data.store);
       });
     }
   }, [token, navigate]);
 
-  console.log(store);
+  const addNewPresentation = (newPresentation) => {
+    setPresentations(newPresentation);
+  };
+
+  React.useEffect(() => {
+    console.log(presentations);
+  }, [presentations]);
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <NavBar token={token} setToken={onTokenChange} />
+      <NavBar token={token} setToken={onTokenChange} addNewPresentation={addNewPresentation} />
       <SideBar activePage='home' />
-      <HomePage drawerWidth={drawerWidth} />
+      <HomePage drawerWidth={drawerWidth} presentations={presentations} />
     </Box>
   );
 }
