@@ -1,45 +1,52 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 import EditSideBar from '../components/EditSideBar';
 import SlideContainer from '../components/SlideContainer';
+import getData from '../getStore';
 
 // page for editing presentations -> path for edit page needs unique presentation id
 function EditPresentation ({ token }) {
   const { presentationId } = useParams();
-  // const [presentation, setPresentation] = useState(null);
-  // const [title, setTitle] = useState('');
+  const [presentation, setPresentation] = React.useState(null);
+  const [title, setTitle] = React.useState('');
   const navigate = useNavigate();
 
-  // const fetchPresentation = async () => {
-  //   try {
-  //     const response = await getData(token);
-  //     if (response && response.data && response.data.store) {
-  //       // make sure id is string
-  //       const presentationData = response.data.store[presentationId];
-  //       if (presentationData) {
-  //         setPresentation(presentationData);
-  //         setTitle(presentationData.title);
-  //       } else {
-  //         console.error('Presentation not found:', presentationId);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to fetch presentation:', error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchPresentation();
-  // }, [presentationId, token]);
+  const fetchPresentation = async () => {
+    try {
+      const response = await getData(token);
+      if (response && response.data && response.data.store) {
+        // make sure id is string
+        const presentationData = response.data.store[presentationId];
+        if (presentationData) {
+          setPresentation(presentationData);
+          setTitle(presentationData.title);
+        } else {
+          console.error('Presentation not found:', presentationId);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch presentation:', error);
+    }
+  };
+  React.useEffect(() => {
+    fetchPresentation();
+  }, [presentationId, token]);
 
-  // console.log(presentationId);
+  console.log(presentation);
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
       <EditSideBar token={token} presentationId={presentationId} />
+
+      {/* implement title editing here */}
+      {/* also need to center etc */}
+      <Box>
+        <Typography variant='h4'>{title}</Typography>
+      </Box>
 
       {/* main editing view */}
       <Box
