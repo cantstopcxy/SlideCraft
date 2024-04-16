@@ -1,5 +1,5 @@
 import {
-  MenuItem,
+  // MenuItem,
   Box,
   Typography,
   Button,
@@ -23,9 +23,9 @@ const EditTitle = ({ presentationId, title, updateTitle, token }) => {
 
   return (
     <>
-      <MenuItem onClick={handleOpen} sx={{ color: '#333333' }}>
+      <Button size='small' onClick={handleOpen}>
         Edit
-      </MenuItem>
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

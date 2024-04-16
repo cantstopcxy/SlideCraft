@@ -37,7 +37,7 @@ const SlideCards = ({ presentations }) => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size='small' onClick={() => navigate(`/edit/${id}`)}>Edit</Button>
+            <Button onClick={() => navigate(`/edit/${id}`)}>Edit</Button>
           </CardActions>
         </Card>
       ))}

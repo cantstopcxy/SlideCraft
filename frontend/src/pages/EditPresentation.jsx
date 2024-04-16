@@ -50,13 +50,6 @@ function EditPresentation ({ token }) {
     <Box sx={{ display: 'flex', height: '100vh' }}>
       <EditSideBar token={token} presentationId={presentationId} />
 
-      {/* implement title editing here */}
-      {/* also need to center etc */}
-      <Box>
-        <Typography variant='h4'>{title}</Typography>
-        <EditTitle size='small' presentationId={presentationId} title={title} updateTitle={updateTitle} token={token}></EditTitle>
-      </Box>
-
       {/* main editing view */}
       <Box
         sx={{
@@ -67,6 +60,21 @@ function EditPresentation ({ token }) {
           overflow: 'hidden'
         }}
       >
+        {/* title editing */}
+        <Box
+        sx={{
+          position: 'absolute',
+          top: 80,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Typography variant='h4'>{title}</Typography>
+          <EditTitle size='small' presentationId={presentationId} presentation={presentation} title={title} updateTitle={updateTitle} token={token}></EditTitle>
+        </Box>
         {/* Home button */}
         <IconButton
           aria-label='home'
