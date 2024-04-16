@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   MenuItem,
   Box,
@@ -8,37 +7,24 @@ import {
   Stack,
   Modal,
 } from '@mui/material';
-// import api from '../api';
+import React from 'react';
+import { style } from './CreatePresentationButton';
+import changeTitle from './NewTitle';
 
-import createPresentation from './NewPresentation';
-
-export const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
-function CreateButton ({ token, addNewPresentation }) {
+const EditTitle = ({ presentationId, title, updateTitle, token }) => {
   const [open, setOpen] = React.useState(false);
-  const [title, setTitle] = React.useState('');
+  const [newTitle, setNewTitle] = React.useState(title);
+  const handleTitleChange = (event) => {
+    setNewTitle(event.target.value);
+  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-
   return (
     <>
       <MenuItem onClick={handleOpen} sx={{ color: '#333333' }}>
-        Create
+        Edit
       </MenuItem>
       <Modal
         open={open}
@@ -53,7 +39,7 @@ function CreateButton ({ token, addNewPresentation }) {
             component='h2'
             textAlign='center'
           >
-            Presentation Title:
+            Change Presentation Title:
           </Typography>
           <Box
             component='form'
@@ -68,7 +54,7 @@ function CreateButton ({ token, addNewPresentation }) {
               id='standard-basic'
               label='Title'
               variant='standard'
-              value={title}
+              value={newTitle}
               onChange={handleTitleChange}
             />
           </Box>
@@ -77,22 +63,23 @@ function CreateButton ({ token, addNewPresentation }) {
             <Button
               variant='contained'
               onClick={() =>
-                createPresentation(
+                changeTitle(
                   event,
                   token,
-                  title,
-                  handleClose,
-                  addNewPresentation
+                  presentationId,
+                  newTitle,
+                  updateTitle,
+                  handleClose
                 )
               }
             >
-              Create
+              Save
             </Button>
           </Stack>
         </Box>
       </Modal>
     </>
   );
-}
+};
 
-export default CreateButton;
+export default EditTitle;

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Box, IconButton, Typography } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import EditTitle from '../components/EditTitle';
 
 import EditSideBar from '../components/EditSideBar';
 import SlideContainer from '../components/SlideContainer';
@@ -36,6 +37,13 @@ function EditPresentation ({ token }) {
     fetchPresentation();
   }, [presentationId, token]);
 
+  const updateTitle = (newTitle) => {
+    setTitle(newTitle);
+  };
+  React.useEffect(() => {
+    setTitle(title);
+  }, [title]);
+
   console.log(presentation);
 
   return (
@@ -46,6 +54,7 @@ function EditPresentation ({ token }) {
       {/* also need to center etc */}
       <Box>
         <Typography variant='h4'>{title}</Typography>
+        <EditTitle size='small' presentationId={presentationId} title={title} updateTitle={updateTitle} token={token}></EditTitle>
       </Box>
 
       {/* main editing view */}
