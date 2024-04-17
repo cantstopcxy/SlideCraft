@@ -8,11 +8,13 @@ import EditTitle from '../components/EditTitle';
 import EditSideBar from '../components/EditSideBar';
 import SlideContainer from '../components/SlideContainer';
 import getData from '../getStore';
+import addNewSlide from '../components/AddNewSlide';
 
 // page for editing presentations -> path for edit page needs unique presentation id
 function EditPresentation ({ token }) {
   const { presentationId } = useParams();
   const [presentation, setPresentation] = React.useState(null);
+  const [presentations, setPresentations] = React.useState([]);
   const [title, setTitle] = React.useState('');
   const navigate = useNavigate();
 
@@ -20,6 +22,7 @@ function EditPresentation ({ token }) {
     try {
       const response = await getData(token);
       if (response && response.data && response.data.store) {
+        setPresentations(response.data.store);
         // make sure id is string
         const presentationData = response.data.store[presentationId];
         if (presentationData) {
@@ -103,8 +106,9 @@ function EditPresentation ({ token }) {
             right: 16,
             transform: 'translateY(-50%)',
           }}
+          onClick={() => addNewSlide(token, presentations, presentationId)}
         >
-          <AddOutlinedIcon />
+          <AddOutlinedIcon/>
         </IconButton>
 
         {/* slide editing container */}
