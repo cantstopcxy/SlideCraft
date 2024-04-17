@@ -13,14 +13,26 @@ function Delete ({ presentationId, iconSize, token }) {
 
   const deletePresentation = async () => {
     try {
-      //   get store data
+      // get store data
       const response = await getData(token);
-      //   delete the specific presentation data with given id
-      delete response.data.store[presentationId];
-      //   update the store data using PUT request
+      const presentationsArray = Object.keys(response.data.store).map(key => ({
+        id: parseInt(key), // make sure ID is int
+        ...response.data.store[key]
+      }));
+      const indexToDelete = presentationsArray.findIndex(p => p.id === parseInt(presentationId));
+      if (indexToDelete !== -1) {
+        presentationsArray.splice(indexToDelete, 1);
+      }
+      const newStore = {};
+      presentationsArray.forEach((item) => {
+      // update the id of the presentation data after the deleted one
+        const newId = item.id > parseInt(presentationId) ? item.id - 1 : item.id;
+        newStore[newId] = { title: item.title, slides: item.slides };
+      });
+      // update the store data using PUT request
       const update = await api.put(
         '/store',
-        { store: response.data.store },
+        { store: newStore },
         {
           headers: {
             'Content-Type': 'application/json',
