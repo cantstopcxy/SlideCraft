@@ -1,13 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Dialog, DialogTitle, DialogContent, Button, DialogActions, DialogContentText } from '@mui/material';
+import { Dialog, DialogTitle, IconButton, DialogContent, Button, DialogActions, DialogContentText } from '@mui/material';
+// import { Box, IconButton, Typography } from '@mui/material';
+// import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import api from '../api';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import getData from '../getStore';
 
-function DeleteSlide ({ presentationId, currentSlideId, iconSize, token, setNumOfSlides }) {
-  const theme = useTheme();
+function DeleteSlide ({ presentationId, currentSlideId, iconSize, token, numOfSlides, setNumOfSlides }) {
+//   const theme = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
@@ -73,25 +75,29 @@ function DeleteSlide ({ presentationId, currentSlideId, iconSize, token, setNumO
 
   return (
     <>
-      <List>
-        <ListItem onClick={handleDelete} sx={{ mt: 'auto', justifyContent: 'center' }}>
-          <ListItemButton sx={{
-            flexDirection: 'column',
-            textAlign: 'center',
-          }}>
-            <ListItemIcon sx={{ color: theme.palette.iconLight, minWidth: 'auto' }}>
-              <DeleteIcon sx={{ fontSize: iconSize }} />
-            </ListItemIcon>
-            <ListItemText primary='Delete' sx={{ color: theme.palette.iconLight }} />
-          </ListItemButton>
-        </ListItem>
-      </List>
+    {numOfSlides > 1 && (
+      <IconButton
+        aria-label='new slide'
+        sx={{
+          bgcolor: '#ACACAD',
+          color: 'white',
+          borderRadius: '50%',
+          position: 'absolute',
+          bottom: 16,
+          left: 16,
+          transform: 'translateY(-50%)',
+        }}
+      onClick={() => handleDelete()}
+    >
+      <DeleteIcon/>
+    </IconButton>
+    )}
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{'Are you sure?'}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            This will delete the presentation permanently.
+            This will delete this slide permanently.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -118,15 +118,8 @@ function EditPresentation ({ token }) {
         >
           <AddOutlinedIcon/>
         </IconButton>
-        <DeleteSlide presentationId={presentationId} currentSlideId={currentSlideId} iconSize={iconSize} token={token} setNumOfSlides={setNumOfSlides}
-          sx={{
-            bgcolor: '#ACACAD',
-            color: 'white',
-            borderRadius: '50%',
-            position: 'absolute',
-            bottom: 36,
-            right: 16,
-          }}
+        <DeleteSlide presentationId={presentationId} currentSlideId={currentSlideId} iconSize={iconSize} token={token} numOfSlides={numOfSlides} setNumOfSlides={setNumOfSlides}
+          // sx defined in DeleteSlide.jsx
         />
         {numOfSlides > 1 && (
           <ArrowNavButtons numOfSlides={numOfSlides} setCurrentSlideId={setCurrentSlideId}/>

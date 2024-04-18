@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 
 const SlideCards = ({ presentations }) => {
   const navigate = useNavigate();
+  console.log(presentations);
   if (!presentations || Object.keys(presentations).length === 0) {
     return <div>Loading...</div>;
   }
@@ -33,7 +34,7 @@ const SlideCards = ({ presentations }) => {
               </Typography>
             )}
             <Typography variant='body2' color='text.secondary'>
-              Number of Slides: {presentation.slides.length}
+              Number of Slides: {Math.max(...Object.keys(presentation.slides).map(key => parseInt(key, 10)))}
             </Typography>
           </CardContent>
           <CardActions>
