@@ -3,18 +3,22 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Box, IconButton, Typography } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import EditTitle from '../components/EditTitle';
+import DeleteSlide from '../components/DeleteSlide';
 
+import EditTitle from '../components/EditTitle';
 import EditSideBar from '../components/EditSideBar';
 import SlideContainer from '../components/SlideContainer';
 import getData from '../getStore';
 import addNewSlide from '../components/AddNewSlide';
+import ArrowNavButtons from '../components/ArrowNavButton';
 
 // page for editing presentations -> path for edit page needs unique presentation id
 function EditPresentation ({ token }) {
   const { presentationId } = useParams();
   const [presentation, setPresentation] = React.useState(null);
   const [presentations, setPresentations] = React.useState([]);
+  const [numOfSlides, setNumOfSlides] = React.useState(0);
+  const [currentSlideId, setCurrentSlideId] = React.useState(1);
   const [title, setTitle] = React.useState('');
   const navigate = useNavigate();
 
@@ -28,6 +32,9 @@ function EditPresentation ({ token }) {
         if (presentationData) {
           setPresentation(presentationData);
           setTitle(presentationData.title);
+          const keys = Object.keys(presentationData.slides);
+          const maxKey = Math.max(...keys.map(key => parseInt(key, 10)));
+          setNumOfSlides(maxKey);
         } else {
           console.error('Presentation not found:', presentationId);
         }
@@ -38,7 +45,7 @@ function EditPresentation ({ token }) {
   };
   React.useEffect(() => {
     fetchPresentation();
-  }, [presentationId, token]);
+  }, [presentationId, token, numOfSlides]);
 
   const updateTitle = (newTitle) => {
     setTitle(newTitle);
@@ -48,7 +55,8 @@ function EditPresentation ({ token }) {
   }, [title]);
 
   console.log(presentation);
-
+  console.log(numOfSlides);
+  const iconSize = '1em';
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
       <EditSideBar token={token} presentationId={presentationId} />
@@ -67,7 +75,7 @@ function EditPresentation ({ token }) {
         <Box
         sx={{
           position: 'absolute',
-          top: 80,
+          top: 30,
           left: 0,
           right: 0,
           display: 'flex',
@@ -106,13 +114,27 @@ function EditPresentation ({ token }) {
             right: 16,
             transform: 'translateY(-50%)',
           }}
-          onClick={() => addNewSlide(token, presentations, presentationId)}
+          onClick={() => addNewSlide(token, presentations, presentationId, setNumOfSlides)}
         >
           <AddOutlinedIcon/>
         </IconButton>
+        <DeleteSlide presentationId={presentationId} currentSlideId={currentSlideId} iconSize={iconSize} token={token} setNumOfSlides={setNumOfSlides}
+          sx={{
+            bgcolor: '#ACACAD',
+            color: 'white',
+            borderRadius: '50%',
+            position: 'absolute',
+            bottom: 36,
+            right: 16,
+          }}
+        />
+        {numOfSlides > 1 && (
+          <ArrowNavButtons numOfSlides={numOfSlides} setCurrentSlideId={setCurrentSlideId}/>
+        )
+        }
 
         {/* slide editing container */}
-        <SlideContainer />
+        <SlideContainer currentSlideId={currentSlideId}/>
       </Box>
     </Box>
   );

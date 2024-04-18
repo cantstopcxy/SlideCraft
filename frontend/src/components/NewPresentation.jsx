@@ -25,20 +25,6 @@ const createPresentation = async (event, token, title, handleClose, addNewPresen
         },
       },
     };
-    // // create an object with the title and the first page
-    // content[currentKeyId] = {
-    //   title, // use the title from the state
-    //   slides: [
-    //     {
-    //       title: '',
-    //       text: '',
-    //       images: [],
-    //       videos: [],
-    //     },
-    //   ], // initiate an empty array for key-values storing slides info
-    //   // modify it when necessary editing the content in slides
-    // };
-    // update with putting the data into store
     const response = await api.put(
       '/store',
       { store: content },

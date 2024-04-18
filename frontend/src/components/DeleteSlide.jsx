@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import getData from '../getStore';
 
-function Delete ({ presentationId, iconSize, token }) {
+function DeleteSlide ({ presentationId, currentSlideId, iconSize, token, setNumOfSlides }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -16,24 +16,27 @@ function Delete ({ presentationId, iconSize, token }) {
       // get store data
       const response = await getData(token);
       // get presentation id array and its content then make them an object
-      const presentationsArray = Object.keys(response.data.store).map(key => ({
+      const slidesArray = Object.keys(response.data.store[presentationId].slides).map(key => ({
         id: parseInt(key), // make sure ID is int
-        ...response.data.store[key]
+        ...response.data.store[presentationId].slides[key]
       }));
-      const indexToDelete = presentationsArray.findIndex(p => p.id === parseInt(presentationId));
+      const indexToDelete = slidesArray.findIndex(p => p.id === parseInt(currentSlideId));
       if (indexToDelete !== -1) {
-        presentationsArray.splice(indexToDelete, 1);
+        slidesArray.splice(indexToDelete, 1);
       }
       const newStore = {};
-      presentationsArray.forEach((item) => {
+      const finalStore = {};
+      slidesArray.forEach((item) => {
       // update the id of the presentation data after the deleted one
-        const newId = item.id > parseInt(presentationId) ? item.id - 1 : item.id;
-        newStore[newId] = { title: item.title, slides: item.slides };
+        const newId = item.id > parseInt(currentSlideId) ? item.id - 1 : item.id;
+        newStore[newId] = { text: item.text, images: item.images, videos: item.videos };
+        finalStore[presentationId] = { title: response.data.store[presentationId].title, slides: newStore };
       });
+
       // update the store data using PUT request
       const update = await api.put(
         '/store',
-        { store: newStore },
+        { store: finalStore },
         {
           headers: {
             'Content-Type': 'application/json',
@@ -41,6 +44,7 @@ function Delete ({ presentationId, iconSize, token }) {
           },
         })
       console.log(update);
+      setNumOfSlides(prev => prev - 1);
     } catch (error) {
       console.error('Failed to delete presentation:', error);
     }
@@ -49,9 +53,10 @@ function Delete ({ presentationId, iconSize, token }) {
   const confirmDelete = async () => {
     try {
       // delete presentation
-      await deletePresentation(presentationId, token);
-      console.log('Presentation deleted:', presentationId);
-      navigate('/dashboard');
+      await deletePresentation(token, presentationId, currentSlideId);
+      console.log('Slide deleted:', currentSlideId);
+      handleClose();
+      navigate(`/edit/${presentationId}`);
       // fetchPresentation(); // get the store data again after the presentation is deleted
     } catch (error) {
       console.error('Failed to delete presentation:', error);
@@ -100,4 +105,4 @@ function Delete ({ presentationId, iconSize, token }) {
   );
 }
 
-export default Delete;
+export default DeleteSlide;

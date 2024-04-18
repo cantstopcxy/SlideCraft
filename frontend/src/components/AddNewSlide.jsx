@@ -1,13 +1,12 @@
 import api from '../api';
-// import getData from '../getStore';
-const addNewSlide = async (token, presentations, presentationId) => {
+const addNewSlide = async (token, presentations, presentationId, setNumOfSlides) => {
   try {
     console.log('Adding a new slide');
     console.log(presentations);
     const slides = presentations[presentationId].slides;
-    const keys = Object.keys(slides); // 获取所有键名，这是字符串数组
-    const maxKey = Math.max(...keys.map(key => parseInt(key, 10))); // 转换为数字并找到最大值
-    const newId = maxKey + 1; // 新的键值
+    const keys = Object.keys(slides);
+    const maxKey = Math.max(...keys.map(key => parseInt(key, 10)));
+    const newId = maxKey + 1;
     console.log(newId);
     presentations[presentationId].slides[newId] = {
       text: '',
@@ -25,6 +24,7 @@ const addNewSlide = async (token, presentations, presentationId) => {
         },
       })
     console.log(putResponse);
+    setNumOfSlides(prev => prev + 1);
   } catch (error) {
     console.error('Failed to add a new slide:', error);
   }
