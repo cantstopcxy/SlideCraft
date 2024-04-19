@@ -17,7 +17,7 @@ function SideBar ({ activePage }) {
         '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box', border: 'none' },
       }}
     >
-      <Toolbar />
+      <Toolbar/>
       <Box sx={{ overflow: 'auto', pt: 3, px: 2 }}>
         <List disablePadding>
           <ListItem disablePadding>

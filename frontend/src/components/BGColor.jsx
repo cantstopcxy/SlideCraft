@@ -98,7 +98,7 @@ const BGColor = ({ token, presentations, setPresentations, presentationId, prese
   };
   return (
     <>
-      <Button onClick={handleOpen} sx={{ position: 'fixed', bottom: 20, right: 20 }}>Change Background</Button>
+      <Button onClick={handleOpen} sx={{ position: 'fixed', bottom: 20, right: 110, }}>Change Background</Button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
         <Typography variant="h6" gutterBottom>

@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 import NavBar from '../components/NavBar';
 import SideBar, { drawerWidth } from '../components/SideBar';
 import HomePage from '../components/HomePage';
+import Sidebar from '../components/SideBarResize';
 
 function Dashboard ({ token, onTokenChange }) {
   const [presentations, setPresentations] = React.useState([]);
@@ -36,7 +37,9 @@ function Dashboard ({ token, onTokenChange }) {
   return (
     <Box sx={{ display: 'flex' }}>
       <NavBar token={token} setToken={onTokenChange} addNewPresentation={addNewPresentation} />
-      <SideBar activePage='home' />
+      <Sidebar>
+        <SideBar activePage='home' />
+      </Sidebar>
       <HomePage drawerWidth={drawerWidth} presentations={presentations} />
     </Box>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 // import api from '../api';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -9,6 +10,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 const SlideCards = ({ presentations }) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   console.log(presentations);
   if (!presentations || Object.keys(presentations).length === 0) {
@@ -17,7 +19,21 @@ const SlideCards = ({ presentations }) => {
   return (
     <>
       {Object.entries(presentations).map(([id, presentation]) => (
-        <Card key={id} sx={{ minWidth: 100, maxWidth: 345, flexGrow: 1, flexBasis: 'calc(50% - 20px)', height: 'auto', aspectRatio: '2 / 1', display: 'flex', flexDirection: 'column' }}>
+        <Card key={id} sx={{
+          minWidth: 100,
+          maxWidth: 345,
+          flexGrow: 1,
+          flexBasis: 'calc(50% - 20px)',
+          height: 'auto',
+          aspectRatio: '2 / 1',
+          display: 'flex',
+          flexDirection: 'column',
+          [theme.breakpoints.down(830)]: {
+            '& .MuiCardContent-root': {
+              height: '150% !important',
+            }
+          }
+        }}>
           <CardMedia
             component="img"
             sx={{ height: 86.25, objectFit: 'cover', backgroundColor: presentation.thumbnail ? 'transparent' : 'grey' }}

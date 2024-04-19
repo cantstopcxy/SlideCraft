@@ -10,7 +10,22 @@ function SlideContainer ({ currentSlideId, presentation }) {
     : defaultBgColor;
 
   return (
-  <Container sx={{ flexGrow: 1, overflow: 'auto', p: 3 }}>
+  <Container sx={{
+    flexGrow: 1,
+    overflow: 'auto',
+    p: 3,
+    '@media (max-height: 760px)': {
+      maxHeight: '66.67%'
+    },
+    '@media (max-width: 980px)': {
+      maxWidth: '90%',
+      maxHeight: '110%'
+    },
+    '@media (max-Width: 640px)': {
+      maxWidth: '80%',
+      maxHeight: '110%'
+    },
+  }}>
     <Paper
       elevation={0}
       sx={{
