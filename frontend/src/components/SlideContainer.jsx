@@ -1,9 +1,14 @@
 import React from 'react';
 import { Container, Paper, Typography } from '@mui/material';
 
-function SlideContainer ({ currentSlideId }) {
+function SlideContainer ({ currentSlideId, presentation }) {
   // get data for current slide
   /* You can implement displaying the presentation content based on presentationId */
+  const defaultBgColor = presentation && presentation.defaultBackgroundColor ? presentation.defaultBackgroundColor : 'white';
+  const bgColor = presentation && presentation.slides && presentation.slides[currentSlideId] && presentation.slides[currentSlideId].backgroundColor
+    ? presentation.slides[currentSlideId].backgroundColor
+    : defaultBgColor;
+
   return (
   <Container sx={{ flexGrow: 1, overflow: 'auto', p: 3 }}>
     <Paper
@@ -16,6 +21,7 @@ function SlideContainer ({ currentSlideId }) {
         display: 'flex',
         overflow: 'hidden',
         position: 'relative',
+        backgroundColor: bgColor,
       }}
     >
       {/* placeholder for slide content */}
@@ -33,10 +39,10 @@ function SlideContainer ({ currentSlideId }) {
           height: '50px',
           fontSize: '1em',
           color: 'black',
-          backgroundColor: 'white',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor: bgColor,
         }}
       >
         {currentSlideId}

@@ -85,7 +85,6 @@ function DeleteSlide ({ presentationId, currentSlideId, setCurrentSlideId, iconS
           position: 'absolute',
           bottom: 16,
           left: 16,
-          transform: 'translateY(-50%)',
         }}
       onClick={() => handleDelete()}
     >

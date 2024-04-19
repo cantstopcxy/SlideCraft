@@ -11,6 +11,7 @@ import SlideContainer from '../components/SlideContainer';
 import getData from '../getStore';
 import addNewSlide from '../components/AddNewSlide';
 import ArrowNavButtons from '../components/ArrowNavButton';
+import BGColor from '../components/BGColor';
 
 // page for editing presentations -> path for edit page needs unique presentation id
 function EditPresentation ({ token }) {
@@ -125,9 +126,9 @@ function EditPresentation ({ token }) {
           <ArrowNavButtons numOfSlides={numOfSlides} currentSlideId={currentSlideId} setCurrentSlideId={setCurrentSlideId}/>
         )
         }
-
+        <BGColor token={token} presentations={presentations} setPresentations={setPresentations} presentationId={presentationId} presentation={presentation} currentSlideId={currentSlideId} setPresentation={setPresentation}/>
         {/* slide editing container */}
-        <SlideContainer currentSlideId={currentSlideId}/>
+        <SlideContainer currentSlideId={currentSlideId} presentation={presentation}/>
       </Box>
     </Box>
   );
