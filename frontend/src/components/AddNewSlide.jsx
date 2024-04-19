@@ -9,9 +9,7 @@ const addNewSlide = async (token, presentations, presentationId, setNumOfSlides)
     const newId = maxKey + 1;
     console.log(newId);
     presentations[presentationId].slides[newId] = {
-      text: '',
-      images: [],
-      videos: [],
+      content: []
     };
     console.log(presentations[presentationId].slides);
     const putResponse = await api.put(

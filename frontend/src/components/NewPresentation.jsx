@@ -19,9 +19,7 @@ const createPresentation = async (event, token, title, handleClose, addNewPresen
       title, // use the title from the state
       slides: {
         1: {
-          text: '',
-          images: [],
-          videos: [],
+          content: [],
         },
       },
     };
