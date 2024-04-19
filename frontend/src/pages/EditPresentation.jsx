@@ -15,11 +15,10 @@ import BGColor from '../components/BGColor';
 
 // page for editing presentations -> path for edit page needs unique presentation id
 function EditPresentation ({ token }) {
-  const { presentationId } = useParams();
+  const { presentationId, slideId } = useParams();
   const [presentation, setPresentation] = React.useState(null);
   const [presentations, setPresentations] = React.useState([]);
   const [numOfSlides, setNumOfSlides] = React.useState(0);
-  const [currentSlideId, setCurrentSlideId] = React.useState(1);
   const [title, setTitle] = React.useState('');
   const navigate = useNavigate();
 
@@ -44,6 +43,7 @@ function EditPresentation ({ token }) {
       console.error('Failed to fetch presentation:', error);
     }
   };
+
   React.useEffect(() => {
     fetchPresentation();
   }, [presentationId, token, numOfSlides]);
@@ -55,8 +55,8 @@ function EditPresentation ({ token }) {
     setTitle(title);
   }, [title]);
 
-  console.log(presentation);
-  console.log(numOfSlides);
+  // console.log(presentation);
+  // console.log(numOfSlides);
   const iconSize = '1em';
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
@@ -72,6 +72,22 @@ function EditPresentation ({ token }) {
           overflow: 'hidden'
         }}
       >
+        {/* Preview button */}
+        <IconButton
+          aria-label='preview'
+          sx={{
+            bgcolor: '#ACACAD',
+            color: 'white',
+            borderRadius: '50%',
+            position: 'absolute',
+            top: 16,
+            left: 16,
+          }}
+          onClick={() => navigate(`/preview/${presentationId}/${slideId}`)}
+        >
+          Preview
+        </IconButton>
+
         {/* title editing */}
         <Box
         sx={{
@@ -119,16 +135,17 @@ function EditPresentation ({ token }) {
         >
           <AddOutlinedIcon/>
         </IconButton>
-        <DeleteSlide presentationId={presentationId} currentSlideId={currentSlideId} setCurrentSlideId={setCurrentSlideId} iconSize={iconSize} token={token} numOfSlides={numOfSlides} setNumOfSlides={setNumOfSlides}
+        <DeleteSlide presentationId={presentationId} currentSlideId={slideId} iconSize={iconSize} token={token} numOfSlides={numOfSlides} setNumOfSlides={setNumOfSlides}
           // sx defined in DeleteSlide.jsx
         />
         {numOfSlides > 1 && (
-          <ArrowNavButtons numOfSlides={numOfSlides} currentSlideId={currentSlideId} setCurrentSlideId={setCurrentSlideId}/>
+          <ArrowNavButtons numOfSlides={numOfSlides} />
         )
         }
-        <BGColor token={token} presentations={presentations} setPresentations={setPresentations} presentationId={presentationId} presentation={presentation} currentSlideId={currentSlideId} setPresentation={setPresentation}/>
+        <BGColor token={token} presentations={presentations} setPresentations={setPresentations} presentationId={presentationId} presentation={presentation} currentSlideId={slideId} setPresentation={setPresentation}/>
+
         {/* slide editing container */}
-        <SlideContainer currentSlideId={currentSlideId} presentation={presentation}/>
+        <SlideContainer currentSlideId={slideId} presentation={presentation} />
       </Box>
     </Box>
   );
