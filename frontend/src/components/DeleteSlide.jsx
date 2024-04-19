@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import getData from '../getStore';
 
-function DeleteSlide ({ presentationId, currentSlideId, iconSize, token, numOfSlides, setNumOfSlides }) {
+function DeleteSlide ({ presentationId, currentSlideId, setCurrentSlideId, iconSize, token, numOfSlides, setNumOfSlides }) {
 //   const theme = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -59,7 +59,7 @@ function DeleteSlide ({ presentationId, currentSlideId, iconSize, token, numOfSl
       console.log('Slide deleted:', currentSlideId);
       handleClose();
       navigate(`/edit/${presentationId}`);
-      // fetchPresentation(); // get the store data again after the presentation is deleted
+      currentSlideId > 1 ? setCurrentSlideId(prev => prev - 1) : setCurrentSlideId(1);
     } catch (error) {
       console.error('Failed to delete presentation:', error);
     }

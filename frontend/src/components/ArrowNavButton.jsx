@@ -3,26 +3,24 @@ import IconButton from '@mui/material/IconButton';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-function ArrowNavButtons ({ numOfSlides, setCurrentSlideId }) {
-  const [newSlideId, setNewSlideId] = React.useState(1);
+function ArrowNavButtons ({ numOfSlides, currentSlideId, setCurrentSlideId }) {
+  // const [newSlideId, setNewSlideId] = React.useState(1);
   const goToPrevious = () => {
-    setNewSlideId(prev => {
-      const nextId = prev > 1 ? prev - 1 : prev;
-      setCurrentSlideId(nextId); // update current slide id passed to 'EditPresentation'(same as newSlideId)
-      return nextId;
-    });
+    setCurrentSlideId(prev =>
+      prev > 1 ? prev - 1 : prev
+      // update current slide id passed to 'EditPresentation'(same as newSlideId)
+    );
     // console.log(newSlideId);
   }
   const goToNext = () => {
-    setNewSlideId(prev => {
-      const nextId = prev < numOfSlides ? prev + 1 : prev;
-      setCurrentSlideId(nextId);
-      return nextId;
-    });
+    setCurrentSlideId(prev =>
+      prev < numOfSlides ? prev + 1 : prev
+    );
+    // console.log(newSlideId);
   }
   React.useEffect(() => {
-    console.log(newSlideId);
-  }, [newSlideId]);
+    console.log(currentSlideId);
+  }, [currentSlideId]);
 
   const handleKeyDown = (event) => {
     if (event.key === 'ArrowLeft') {
@@ -40,10 +38,10 @@ function ArrowNavButtons ({ numOfSlides, setCurrentSlideId }) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [newSlideId, numOfSlides]);
+  }, [currentSlideId, numOfSlides]);
   return (
     <>
-      {newSlideId > 1 && (
+      {currentSlideId > 1 && (
         <IconButton
         aria-label="previous slide"
         onClick={() => goToPrevious()}
@@ -60,7 +58,7 @@ function ArrowNavButtons ({ numOfSlides, setCurrentSlideId }) {
       </IconButton>
       )}
 
-      {newSlideId < numOfSlides && (
+      {currentSlideId < numOfSlides && (
         <IconButton
         aria-label="next slide"
         onClick={() => goToNext()}

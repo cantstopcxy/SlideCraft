@@ -118,11 +118,11 @@ function EditPresentation ({ token }) {
         >
           <AddOutlinedIcon/>
         </IconButton>
-        <DeleteSlide presentationId={presentationId} currentSlideId={currentSlideId} iconSize={iconSize} token={token} numOfSlides={numOfSlides} setNumOfSlides={setNumOfSlides}
+        <DeleteSlide presentationId={presentationId} currentSlideId={currentSlideId} setCurrentSlideId={setCurrentSlideId} iconSize={iconSize} token={token} numOfSlides={numOfSlides} setNumOfSlides={setNumOfSlides}
           // sx defined in DeleteSlide.jsx
         />
         {numOfSlides > 1 && (
-          <ArrowNavButtons numOfSlides={numOfSlides} setCurrentSlideId={setCurrentSlideId}/>
+          <ArrowNavButtons numOfSlides={numOfSlides} currentSlideId={currentSlideId} setCurrentSlideId={setCurrentSlideId}/>
         )
         }
 
