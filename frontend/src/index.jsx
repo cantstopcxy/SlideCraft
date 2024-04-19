@@ -6,23 +6,16 @@ import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#556CD6',
+    },
+    secondary: {
+      main: '#FFFFFF',
     },
     background: {
-      default: '#e8e8e8',
+      default: '#F0F0f0',
     },
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: `
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: sans-serif;
-        }
-      `,
-    },
+    iconLight: '#FFFFFF',
+    iconDark: '#6E6E6E',
   },
 });
 

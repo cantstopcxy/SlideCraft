@@ -1,9 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
 
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import EditPresentation from './pages/EditPresentation';
+import PreviewPage from './pages/Preview';
+import { SlideProvider } from './SlideContext';
 
 function App () {
   let lsToken = null;
@@ -17,6 +20,15 @@ function App () {
     localStorage.setItem('token', newToken);
   };
 
+  const EditPresentationWithProvider = () => {
+    const { presentationId, slideId } = useParams();
+    return (
+      <SlideProvider presentationId={presentationId} slideId={slideId} token={token}>
+        <EditPresentation token={token} />
+      </SlideProvider>
+    );
+  };
+
   return (
     <BrowserRouter>
       <Routes>
@@ -24,6 +36,8 @@ function App () {
         <Route path="/login" element={<Login token={token} onTokenChange={persistToken} />} />
         <Route path="/register" element={<Register token={token} onTokenChange={persistToken} />} />
         <Route path="/dashboard" element={<Dashboard token={token} onTokenChange={persistToken} />} />
+        <Route path="/edit/:presentationId/:slideId" element={<EditPresentationWithProvider />} />
+        <Route path="/preview/:presentationId/:slideId" element={<PreviewPage token={token} />} />
       </Routes>
     </BrowserRouter>
   );
